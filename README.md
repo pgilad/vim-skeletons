@@ -17,7 +17,7 @@ For any information on the snippets engine see [UltiSnips](https://github.com/Si
 Recommended install using `NeoBundle`:
 
 ```vim
-NeoBundle 'tobyS/skeletons.vim'
+NeoBundle 'pgilad/vim-skeletons'
 ```
 
 Source your `.vimrc` and then run `:NeoBundleInstall`.
