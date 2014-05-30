@@ -3,7 +3,32 @@ scriptencoding utf-8
 let s:save_cpo = &cpo
 set cpo&vim
 
-func! s:GetType(file)
+" taken from https://github.com/Shougo/neomru.vim/blob/master/autoload/neomru.vim
+function! skeletons#setDefault(var, val, ...)  "{{{
+    if !exists(a:var) || type({a:var}) != type(a:val)
+        let alternate_var = get(a:000, 0, '')
+        let {a:var} = exists(alternate_var) ? {alternate_var} : a:val
+    endif
+endfunction "}}}
+
+let s:defaults = {
+            \ 'skeletonsDir': '~/.vim/skeletons',
+            \ 'autoRegister' : 1,
+            \ 'skeletonGlob': '/skeleton.*'
+            \ }
+
+call skeletons#setDefault('g:skeletons#skeletonsDir', s:defaults.skeletonsDir)
+call skeletons#setDefault('g:skeletons#autoRegister', s:defaults.autoRegister)
+call skeletons#setDefault('g:skeletons#skeletonGlob', s:defaults.skeletonGlob)
+
+let s:skeletons = {
+            \ 'candidates' : {},
+            \ 'skeletonsDir': g:skeletons#skeletonsDir,
+            \ 'autoRegister': g:skeletons#autoRegister,
+            \ 'skeletonGlob' : g:skeletons#skeletonGlob,
+            \ 'loaded' : 0
+            \ }
+function! s:skeletons.getType(file)
     if fnamemodify(a:file, ':e:e') =~ '\.'
         return fnamemodify(a:file, ':e:e:r')
     else
@@ -11,32 +36,35 @@ func! s:GetType(file)
     endif
 endfunc
 
-func! s:GetExt(file)
+function! s:skeletons.getExt(file)
     return fnamemodify(a:file, ':e')
 endfunc
 
-func! s:RegisterSkeleton(file)
-    let fileExt = s:GetExt(a:file)
-    if !has_key(g:skeletons, fileExt)
-        let g:skeletons[fileExt] = []
+function! s:skeletons.registerSkeleton(file)
+    let fileExt = self.getExt(a:file)
+    if !has_key(self.candidates, fileExt)
+        let self.candidates[fileExt] = []
     endif
-    call add(g:skeletons[fileExt], a:file)
+    call add(self.candidates[fileExt], a:file)
 endfunc
 
-func! skeletons#RegisterSkeletons()
+function! s:skeletons.registerSkeletons()
+    let self.loaded = 1
     " get all files in skeleton dir
-    let l:files = split(glob(g:skeletons.skeletonsDir . "/skeleton.*"), "\n")
+    let l:files = split(glob(self.skeletonsDir . self.skeletonGlob, "\n"))
     for l:file in l:files
-        call s:RegisterSkeleton(l:file)
+        call self.registerSkeleton(l:file)
     endfor
 endfunc
 
-func! skeletons#ChooseSkeleton(fileExt)
-    if !has_key(g:skeletons, a:fileExt)
+function! s:skeletons.chooseSkeleton(fileExt)
+    echom len(self.candidates)
+    if !has_key(self.candidates, a:fileExt)
         " No skeleton for this filetype
         return 0
     endif
-    let skeletonsList = g:skeletons[a:fileExt]
+    let skeletonsList = self.candidates[a:fileExt]
+    echom len(skeletonsList)
     if len(skeletonsList) == 0
         return 0
     elseif len(skeletonsList) == 1
@@ -45,7 +73,7 @@ func! skeletons#ChooseSkeleton(fileExt)
         " gather types
         let types = []
         for type in skeletonsList
-            call add(types, s:GetType(type))
+            call add(types, self.getType(type))
         endfor
 
         " ask user for which type to use
@@ -55,16 +83,28 @@ func! skeletons#ChooseSkeleton(fileExt)
     endif
 endfunc
 
-func! skeletons#InsertSkeleton()
+function! s:skeletons.insertSkeleton()
+    if !self.loaded
+        call self.registerSkeletons()
+    endif
     " grab file extension of current new file
     let fileExt = expand('%:e')
-    let skeletonFile = skeletons#ChooseSkeleton(fileExt)
+    let skeletonFile = self.chooseSkeleton(fileExt)
     if len(skeletonFile)>0 && filereadable(skeletonFile)
         let l:snippet = join(readfile(skeletonFile), "\n")
+        " TODO: handle no UltiSnips
         call UltiSnips#Anon(l:snippet)
     else
         " empty dictionary for filetype or error
     endif
+endfunc
+
+function! skeletons#registerSkeletons()
+    call s:skeletons.registerSkeletons()
+endfunc
+
+function! skeletons#InsertSkeleton()
+    call s:skeletons.insertSkeleton()
 endfunc
 
 let &cpo = s:save_cpo

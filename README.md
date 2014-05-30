@@ -28,8 +28,11 @@ Either use the provided default skeletons dir or define your own.
 
 You can define the skeletons dir like so:
 ```vim
-let g:skeletons.skeletonsDir = "~/.dotfiles/vim/skeletons"
+let skeletons#skeletonsDir = "~/.dotfiles/vim/skeletons"
 ```
+
+If make any changes after load to the skeletons directory or file,
+you can reload the skeletons via `:SkeletonsReload`.
 
 TODO
 
