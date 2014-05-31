@@ -6,20 +6,12 @@ endif
 let s:save_cpo = &cpo
 set cpo&vim
 
-function! s:skeletonsAutoRegister
-    " hook to buffer new to create skeletons
-    augroup skeletons
-        autocmd!
-        autocmd BufNewFile * call skeletons#InsertSkeleton()
-    augroup END
-endfunc
-
 if skeletons#autoRegister
-    call s:AutoRegister()
+    call skeletons#skeletonsOn()
 endif
 
 command! SkeletonsReload call skeletons#RegisterSkeletons()
-command! SkeletonsOn call s:skeletonsAutoRegister()
+command! SkeletonsOn call skeletons#skeletonsOn()
 command! SkeletonsOff autocmd! skeletons
 
 "set script as loaded

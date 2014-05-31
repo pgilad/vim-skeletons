@@ -11,6 +11,13 @@ function! skeletons#setDefault(var, val, ...)  "{{{
     endif
 endfunction "}}}
 
+function! skeletons#skeletonsOn
+    augroup skeletons
+        autocmd!
+        autocmd BufNewFile * call skeletons#InsertSkeleton()
+    augroup END
+endfunc
+
 let s:defaults = {
             \ 'skeletonsDir': ['~/.vim/skeletons'],
             \ 'autoRegister' : 1,
