@@ -45,7 +45,7 @@ Skeletons are loaded from `skeletons#skeletonsDir`. You can define them as `skel
 
 `skeleton.js` for Javascript files.
 
-You can also have multiple skeleton for a filetype, and when you open a new file `vim-skeletons` will ask you which
+You can also have multiple skeletons for a filetype, and when you open a new file `vim-skeletons` will ask you which
 skeleton you want to use for that filetype.
 
 That is defined by `skeleton.extra.filetype`.
