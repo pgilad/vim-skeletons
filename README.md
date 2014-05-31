@@ -37,6 +37,44 @@ You can change the skeletons directory:
 let skeletons#skeletonsDir += "~/.dotfiles/vim/skeletons"
 ```
 
+## Skeletons
+
+### Loading and Filetypes
+
+Skeletons are loaded from `skeletons#skeletonsDir`. You can define them as `skeleton.filetype`, for example:
+
+`skeleton.js` for Javascript files.
+
+You can also have multiple skeleton for a filetype, and when you open a new file `vim-skeletons` will ask you which
+skeleton you want to use for that filetype.
+
+That is defined by `skeleton.extra.filetype`.
+
+For example:
+
+- `skeleton.angular.js`
+- `skeleton.node.js`
+- `skeleton.js` (Will be named default)
+
+### Skeleton Inside
+
+A skeleton could be just an empty file, a file with any text in it, and to make it really powerful - you can use the
+`UltiSnips` syntax for it. After creating a new file, `vim-skeleton` will interpolate the skeleton using the `UltiSnips` engine,
+thus allowing you to set defaults, use snippet structure and anything else you can think of.
+
+An example skeleton `skeleton.php` is included:
+
+```php
+<?php
+
+namespace ${1:`!v PathToNamespace(expand("%:h"))`};
+
+class ${2:`!v expand("%:t:r")`}
+{
+    ${3}
+}
+```
+
 ## API
 
 ### SkeletonsOn
