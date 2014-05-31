@@ -14,13 +14,22 @@ For any information on the snippets engine see [UltiSnips](https://github.com/Si
 
 ## Installation
 
-Recommended install using `NeoBundle`:
+This plugin follows the standard runtime path structure, and as such it can be installed with a variety of plugin managers:
 
-```vim
-NeoBundle 'pgilad/vim-skeletons'
-```
+### [NeoBundle](https://github.com/Shougo/neobundle.vim)
+`NeoBundle 'pgilad/vim-skeletons'`
 
-Then source your `.vimrc` and then run `:NeoBundleInstall`.
+### [Pathogen](https://github.com/tpope/vim-pathogen)
+`git clone https://github.com/pgilad/vim-skeletons ~/.vim/bundle/vim-skeletons`
+
+### [Vundle](https://github.com/gmarik/vundle)
+`Plugin 'pgilad/vim-skeletons'`
+
+### [VAM](https://github.com/MarcWeber/vim-addon-manager)
+`call vam#ActivateAddons([ 'vim-skeletons' ])`
+
+###  manual
+copy all of the files into your `~/.vim` directory
 
 ## Usage
 
