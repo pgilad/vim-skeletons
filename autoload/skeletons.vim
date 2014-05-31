@@ -12,7 +12,7 @@ function! skeletons#setDefault(var, val, ...)  "{{{
 endfunction "}}}
 
 let s:defaults = {
-            \ 'skeletonsDir': '~/.vim/skeletons',
+            \ 'skeletonsDir': ['~/.vim/skeletons'],
             \ 'autoRegister' : 1,
             \ 'skeletonGlob': '/skeleton.*'
             \ }
@@ -28,6 +28,7 @@ let s:skeletons = {
             \ 'skeletonGlob' : g:skeletons#skeletonGlob,
             \ 'loaded' : 0
             \ }
+
 function! s:skeletons.getType(file)
     if fnamemodify(a:file, ':e:e') =~ '\.'
         return fnamemodify(a:file, ':e:e:r')
@@ -50,21 +51,27 @@ endfunc
 
 function! s:skeletons.registerSkeletons()
     let self.loaded = 1
-    " get all files in skeleton dir
-    let l:files = split(glob(self.skeletonsDir . self.skeletonGlob, "\n"))
-    for l:file in l:files
-        call self.registerSkeleton(l:file)
+    "if directory is a string - make it a list
+    if type(self.skeletonsDir) == type("")
+        let self.skeletonsDir = [self.skeletonsDir]
+    endif
+
+    " iterate every skeletons dir
+    for skelDir in self.skeletonsDir
+        " get all files in skeleton dir
+        let l:files = split(glob(skelDir . self.skeletonGlob, "\n"))
+        for l:file in l:files
+            call self.registerSkeleton(l:file)
+        endfor
     endfor
 endfunc
 
 function! s:skeletons.chooseSkeleton(fileExt)
-    echom len(self.candidates)
     if !has_key(self.candidates, a:fileExt)
         " No skeleton for this filetype
         return 0
     endif
     let skeletonsList = self.candidates[a:fileExt]
-    echom len(skeletonsList)
     if len(skeletonsList) == 0
         return 0
     elseif len(skeletonsList) == 1

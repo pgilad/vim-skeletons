@@ -20,24 +20,34 @@ Recommended install using `NeoBundle`:
 NeoBundle 'pgilad/vim-skeletons'
 ```
 
-Source your `.vimrc` and then run `:NeoBundleInstall`.
+Then source your `.vimrc` and then run `:NeoBundleInstall`.
 
 ## Usage
 
-Either use the provided default skeletons dir or define your own.
+`vim-skeletons` is shipped with a sample skeletons, thus your will need to either add your
+own skeletons or add any skeleton repository.
 
-You can define the skeletons dir like so:
+To activate `vim-skeletons` you can use `:SkeletonsOn`.
+
+You can change the skeletons directory:
 ```vim
-let skeletons#skeletonsDir = "~/.dotfiles/vim/skeletons"
+let skeletons#skeletonsDir += "~/.dotfiles/vim/skeletons"
 ```
+
+## API
+
+### SkeletonsOn
+
+Call `:SkeletonsOn` manually to make `vim-skeletons` auto-register for creation of new files.
+
+### SkeletonsOff
+
+Call `:SkeletonsOff` to disable `vim-skeletons` for new files.
+
+### SkeletonsReload
 
 If make any changes after load to the skeletons directory or file,
 you can reload the skeletons via `:SkeletonsReload`.
-
-TODO
-
-## API
-TODO
 
 ## License
 
