@@ -14,18 +14,27 @@ For any information on the snippets engine see [UltiSnips](https://github.com/Si
 
 ## Installation
 
-Recommended install using `NeoBundle`:
+This plugin follows the standard runtime path structure, and can be installed with a variety of plugin managers:
 
-```vim
-NeoBundle 'pgilad/vim-skeletons'
-```
+#### [NeoBundle](https://github.com/Shougo/neobundle.vim)
+`NeoBundle 'pgilad/vim-skeletons'`
 
-Then source your `.vimrc` and then run `:NeoBundleInstall`.
+#### [Pathogen](https://github.com/tpope/vim-pathogen)
+`git clone https://github.com/pgilad/vim-skeletons ~/.vim/bundle/vim-skeletons`
+
+#### [Vundle](https://github.com/gmarik/vundle)
+`Plugin 'pgilad/vim-skeletons'`
+
+#### [VAM](https://github.com/MarcWeber/vim-addon-manager)
+`call vam#ActivateAddons([ 'vim-skeletons' ])`
+
+####  Manual
+copy all of the files into your `~/.vim` directory
 
 ## Usage
 
 `vim-skeletons` is shipped with a sample skeletons, thus your will need to either add your
-own skeletons or add any skeleton repository.
+own skeletons or add a skeleton repository.
 
 To activate `vim-skeletons` you can use `:SkeletonsOn`. Or just set in your `.vimrc`:
 ```vim
@@ -58,8 +67,12 @@ For example:
 
 ### Skeleton Inside
 
-A skeleton could be just an empty file, a file with any text in it, and to make it really powerful - you can use the
-`UltiSnips` syntax for it. After creating a new file, `vim-skeleton` will interpolate the skeleton using the `UltiSnips` engine,
+A skeleton can be:
+- A blank file
+- A file with any text in it
+- An `UltiSnips` template
+
+After creating a new file, `vim-skeleton` will interpolate the skeleton using the `UltiSnips` engine,
 thus allowing you to set defaults, use snippet structure and anything else you can think of.
 
 An example skeleton `skeleton.php` is included:
@@ -87,9 +100,8 @@ Call `:SkeletonsOff` to disable `vim-skeletons` for new files.
 
 ### SkeletonsReload
 
-If make any changes after load to the skeletons directory or file,
-you can reload the skeletons via `:SkeletonsReload`.
+If make any changes to the skeletons directory or files you can reload them via `:SkeletonsReload`.
 
 ## License
 
-MIT License 2014 (©) Gilad Peleg
+MIT License 2014 ©Gilad Peleg
