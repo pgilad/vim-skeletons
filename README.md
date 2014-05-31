@@ -27,7 +27,10 @@ Then source your `.vimrc` and then run `:NeoBundleInstall`.
 `vim-skeletons` is shipped with a sample skeletons, thus your will need to either add your
 own skeletons or add any skeleton repository.
 
-To activate `vim-skeletons` you can use `:SkeletonsOn`.
+To activate `vim-skeletons` you can use `:SkeletonsOn`. Or just set in your `.vimrc`:
+```vim
+let skeletons#autoRegister = 1
+```
 
 You can change the skeletons directory:
 ```vim
@@ -38,7 +41,7 @@ let skeletons#skeletonsDir += "~/.dotfiles/vim/skeletons"
 
 ### SkeletonsOn
 
-Call `:SkeletonsOn` manually to make `vim-skeletons` auto-register for creation of new files.
+Call `:SkeletonsOn` to make `vim-skeletons` auto-register for creation of new files.
 
 ### SkeletonsOff
 

@@ -5,22 +5,22 @@ set cpo&vim
 
 " taken from https://github.com/Shougo/neomru.vim/blob/master/autoload/neomru.vim
 function! skeletons#setDefault(var, val, ...)  "{{{
-    if !exists(a:var) || type({a:var}) != type(a:val)
+    if !exists(a:var)
         let alternate_var = get(a:000, 0, '')
         let {a:var} = exists(alternate_var) ? {alternate_var} : a:val
     endif
 endfunction "}}}
 
-function! skeletons#skeletonsOn
+function! skeletons#skeletonsOn()
     augroup skeletons
         autocmd!
         autocmd BufNewFile * call skeletons#InsertSkeleton()
     augroup END
-endfunc
+endfunction
 
 let s:defaults = {
             \ 'skeletonsDir': ['~/.vim/skeletons'],
-            \ 'autoRegister' : 1,
+            \ 'autoRegister' : 0,
             \ 'skeletonGlob': '/skeleton.*'
             \ }
 

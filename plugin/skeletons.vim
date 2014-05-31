@@ -6,13 +6,13 @@ endif
 let s:save_cpo = &cpo
 set cpo&vim
 
-if skeletons#autoRegister
-    call skeletons#skeletonsOn()
-endif
-
 command! SkeletonsReload call skeletons#RegisterSkeletons()
 command! SkeletonsOn call skeletons#skeletonsOn()
 command! SkeletonsOff autocmd! skeletons
+
+if skeletons#autoRegister
+    SkeletonsOn
+endif
 
 "set script as loaded
 let skeletons#loaded = 1
