@@ -33,8 +33,10 @@ copy all of the files into your `~/.vim` directory
 
 ## Usage
 
-`vim-skeletons` is shipped with a sample skeletons, thus your will need to either add your
+`vim-skeletons` is shipped with sample skeletons, thus you will need to either add your
 own skeletons or add a skeleton repository.
+
+**PRs for example skeletons will be happily accepted**
 
 To activate `vim-skeletons` you can use `:SkeletonsOn`. Or just set in your `.vimrc`:
 ```vim
@@ -50,22 +52,17 @@ let skeletons#skeletonsDir += "~/.dotfiles/vim/skeletons"
 
 ### Loading and Filetypes
 
-Skeletons are loaded from `skeletons#skeletonsDir`. You can define them as `skeleton.filetype`, for example:
+Skeletons are loaded from `skeletons#skeletonsDir`. They follow the following pattern: `skeleton-name.<extra>.<filetype>`, for example:
 
 `skeleton.js` for Javascript files.
+`skeleton.angular.js` for Angular.js Javascript files.
+`skeleton.backbone.js` for Backbone.js Javascript files.
+`skeleton.jquery.js` for Jquery Javascript files.
 
 You can also have multiple skeletons for a filetype, and when you open a new file `vim-skeletons` will ask you which
-skeleton you want to use for that filetype.
+skeleton you want to use for that filetype, the default being the file without the extra field. In our examples `skeleton.js`.
 
-That is defined by `skeleton.extra.filetype`.
-
-For example:
-
-- `skeleton.angular.js`
-- `skeleton.node.js`
-- `skeleton.js` (Will be named default)
-
-### Skeleton Inside
+### Skeleton Details
 
 A skeleton can be:
 - A blank file
@@ -88,7 +85,7 @@ class ${2:`!v expand("%:t:r")`}
 }
 ```
 
-## API
+## Global Commands
 
 ### SkeletonsOn
 
@@ -104,4 +101,4 @@ If make any changes to the skeletons directory or files you can reload them via 
 
 ## License
 
-MIT License 2014 ©Gilad Peleg
+MIT License 2015 ©Gilad Peleg
