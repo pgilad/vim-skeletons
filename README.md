@@ -52,12 +52,14 @@ let skeletons#skeletonsDir += "~/.dotfiles/vim/skeletons"
 
 ### Loading and Filetypes
 
-Skeletons are loaded from `skeletons#skeletonsDir`. They follow the following pattern: `skeleton-name.<extra>.<filetype>`, for example:
+Skeletons are loaded from `skeletons#skeletonsDir`. They follow the following pattern:
 
-`skeleton.js` for Javascript files.
-`skeleton.angular.js` for Angular.js Javascript files.
-`skeleton.backbone.js` for Backbone.js Javascript files.
-`skeleton.jquery.js` for Jquery Javascript files.
+`skeleton-name.<extra>.<filetype>`, for example:
+
+- `skeleton.js` for Javascript files.
+- `skeleton.angular.js` for Angular.js Javascript files.
+- `skeleton.backbone.js` for Backbone.js Javascript files.
+- `skeleton.jquery.js` for Jquery Javascript files.
 
 You can also have multiple skeletons for a filetype, and when you open a new file `vim-skeletons` will ask you which
 skeleton you want to use for that filetype, the default being the file without the extra field. In our examples `skeleton.js`.
