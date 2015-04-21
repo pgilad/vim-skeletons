@@ -4,6 +4,8 @@
 
 ## Intro
 
+![Basic output example of vim-skeleton](media/screenshot.png)
+
 This project is based on [skeletons.vim](https://github.com/tobyS/skeletons.vim) and expanded
 from it.
 
