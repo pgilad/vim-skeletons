@@ -75,26 +75,31 @@ endfunc
 
 function! s:skeletons.chooseSkeleton(fileExt)
     if !has_key(self.candidates, a:fileExt)
-        " No skeleton for this filetype
         return 0
     endif
+
     let skeletonsList = self.candidates[a:fileExt]
     if len(skeletonsList) == 0
         return 0
-    elseif len(skeletonsList) == 1
-        return skeletonsList[0]
-    else
-        " gather types
-        let types = []
-        for type in skeletonsList
-            call add(types, self.getType(type))
-        endfor
-
-        " ask user for which type to use
-        let mappedTypes = map(copy(types), '"&" . v:val')
-        let choice = confirm("Select the skeleton type for " . a:fileExt, join(mappedTypes, "\n"), 1, "Question")
-        return skeletonsList[choice - 1]
     endif
+
+    if len(skeletonsList) == 1
+        return skeletonsList[0]
+    endif
+
+    " gather types
+    let types = []
+    for type in skeletonsList
+        call add(types, self.getType(type))
+    endfor
+
+    " ask user for which type to use
+    let mappedTypes = map(copy(types), '"&" . v:val')
+    let choice = confirm("Select the skeleton type for " . a:fileExt, join(mappedTypes, "\n"), 1, "Question")
+    if choice == 0
+        return 0
+    endif
+    return skeletonsList[choice - 1]
 endfunc
 
 function! s:skeletons.insertSkeleton()
