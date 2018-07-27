@@ -21,7 +21,7 @@ endfunction
 let s:defaults = {
             \ 'skeletonsDir': ['~/.vim/skeletons'],
             \ 'autoRegister' : 0,
-            \ 'skeletonGlob': '/skeleton.*'
+            \ 'skeletonGlob': '/skeleton*.*'
             \ }
 
 call skeletons#setDefault('g:skeletons#skeletonsDir', s:defaults.skeletonsDir)
@@ -43,6 +43,16 @@ function! s:skeletons.getType(file)
         return 'default'
     endif
 endfunc
+
+function! s:skeletons.getName(file)
+    let fname=fnamemodify(a:file, ":t")
+    let name=substitute(fname,'^.*-\(.\{-}\)\..*','\1',"")
+    if name ==# fname
+        return ""
+    else
+        return name
+    endif
+endfunction
 
 function! s:skeletons.getExt(file)
     return fnamemodify(a:file, ':e')
@@ -83,23 +93,41 @@ function! s:skeletons.chooseSkeleton(fileExt)
         return 0
     endif
 
-    if len(skeletonsList) == 1
-        return skeletonsList[0]
-    endif
-
     " gather types
-    let types = []
+    let types = {}
+    let names = {}
     for type in skeletonsList
-        call add(types, self.getType(type))
+        let name = self.getName(type)
+        if name !=# ""
+            if !has_key(names, name)
+                let names[name] = {}
+            endif
+            let names[name][self.getType(type)] = type
+        else
+            let types[self.getType(type)] = type
+        endif
     endfor
 
+    let fname = expand("%:t:r")
+    if has_key(names, fname)
+        let types = names[fname]
+    endif
+
+    if len(types) == 0
+        return 0
+    endif
+
+    if len(types) == 1
+        return types[keys(types)[0]]
+    endif
+
     " ask user for which type to use
-    let mappedTypes = map(copy(types), '"&" . v:val')
+    let mappedTypes = map(copy(keys(types)), '"&" . v:val')
     let choice = confirm("Select the skeleton type for " . a:fileExt, join(mappedTypes, "\n"), 1, "Question")
     if choice == 0
         return 0
     endif
-    return skeletonsList[choice - 1]
+    return types[keys(types)[choice - 1]]
 endfunc
 
 function! s:skeletons.insertSkeleton()
