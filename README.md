@@ -105,4 +105,4 @@ If make any changes to the skeletons directory or files you can reload them via 
 
 ## License
 
-MIT License 2015 ©Gilad Peleg
+MIT © [Gilad Peleg](https://www.giladpeleg.com)
