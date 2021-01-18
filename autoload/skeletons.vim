@@ -107,7 +107,7 @@ function! s:skeletons.insertSkeleton()
         call self.registerSkeletons()
     endif
     " grab file extension of current new file
-    let fileExt = expand('%:e')
+    let fileExt = expand('%:e') ? expand('%:e') : expand('%:t')
     let skeletonFile = self.chooseSkeleton(fileExt)
     if len(skeletonFile)>0 && filereadable(skeletonFile)
         let l:snippet = join(readfile(skeletonFile), "\n")
